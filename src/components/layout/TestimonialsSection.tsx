@@ -1,73 +1,99 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { UserRound, ChevronLeft, ChevronRight, ImagePlus } from "lucide-react";
 import crossIcon from "../../assets/logo.svg";
-// import { TESTIMONIALS } from "../../constants/testimonials";
+import { TESTIMONIALS } from "../../constants/testimonials";
+
+const navButtonClass =
+  "flex size-12 items-center justify-center rounded-full border border-[#EBEBEB] transition-all hover:bg-black/5";
+
+const titleClass = "font-['Inter_Tight'] font-medium text-black";
+
+const subtitleClass = "font-['Inter_Tight'] text-sm leading-5 text-black";
 
 const Testimonials = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const current = TESTIMONIALS[currentIndex];
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex(
+      (prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length,
+    );
+  };
+
   return (
-    <section className="bg-white w-full max-w-360 min-h-169.75 mx-auto p-20 flex flex-col justify-center">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10 md:mb-16">
-        <div className="bg-[#F5AA21] rounded-xl pt-8 px-8 pb-14.5 w-full lg:max-w-211.25 min-h-139.75 relative isolate flex flex-col justify-between overflow-hidden">
+    <section className="mx-auto flex min-h-169.75 w-full max-w-360 flex-col justify-center bg-white p-20">
+      <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+        <div className="relative isolate flex min-h-139.75 w-full flex-col justify-between overflow-hidden rounded-xl bg-[#F5AA21] px-8 pt-8 pb-14 lg:max-w-211.25">
           <img
             src={crossIcon}
             alt=""
-            className="absolute left-[57.63%] w-[57.51%] aspect-square top-[-10%] brightness-0 invert opacity-[0.24] z-[-1] pointer-events-none"
+            className="pointer-events-none absolute top-[-10%] left-[57.63%] z-[-1] aspect-square w-[57.51%] brightness-0 invert opacity-25"
           />
-          <h2 className="font-['Inter_Tight'] text-[48px] leading-14 font-medium text-black max-w-101.75">
+
+          <h2 className={`${titleClass} max-w-101.75 text-[48px] leading-14`}>
             Hear From Our Satisfied Customers
           </h2>
 
-          <div className="flex items-start w-full max-w-195.25 max-h-44.5 self-stretch  flex-col justify-between gap-10 order-2 z-2">
-            <div className="flex justify-between items-center w-full">
+          <div className="flex w-full max-w-195.25 flex-col gap-10">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-15 h-15 rounded-full bg-[#f5f5f5] flex items-center justify-center flex-none order-0 grow-0 overflow-hidden">
+                <div className="flex size-15 items-center justify-center overflow-hidden rounded-full bg-[#F5F5F5]">
                   <UserRound
                     size={32}
                     strokeWidth={1.5}
-                    className="text-[#070707]/40"
+                    className="text-black/40"
                   />
                 </div>
 
-                <div className="flex max-h-15 py-1.25 self-stretch flex-col justify-between gap-1">
-                  <span className="font-['Inter_Tight'] text-[18px] leading-6.5 font-medium text-[#070707] w-34.75 h-[26px]flex-none order-0 self-stretch grow-0">
-                    Sarah Wijhayanto
+                <div className="flex flex-col gap-1 py-1">
+                  <span className={`${titleClass} text-[18px] leading-6.5`}>
+                    {current.name}
                   </span>
-                  <span className="font-['Inter_Tight'] text-[14px] leading-5 font-normal text-[#070707] w-34.75 h-[20px]flex-none order-1 self-stretch grow-0">
-                    Homeowner
-                  </span>
+
+                  <span className={subtitleClass}>{current.role}</span>
                 </div>
               </div>
 
               <div className="flex gap-2">
-                <button className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <ChevronLeft size={20} />
+                <button onClick={handlePrev} className={navButtonClass}>
+                  <ChevronLeft size={20} strokeWidth={1.5} />
                 </button>
-                <button className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <ChevronRight size={20} />
+
+                <button onClick={handleNext} className={navButtonClass}>
+                  <ChevronRight size={20} strokeWidth={1.5} />
                 </button>
               </div>
             </div>
 
-            <p className="text-[18px] leading-relaxed text-black max-w-full">
+            <p className="text-[18px] leading-relaxed text-black">
               I am absolutely thrilled with the renovation work! The team not
               only fixed the plumbing issues I had but also transformed my
-              entire bathroom into a modern, luxurious space.
+              entire bathroom into a modern, luxurious space. The attention to
+              detail was remarkable, and they finished the project on time. I
+              highly recommend their services!
             </p>
           </div>
         </div>
 
-        <div className="bg-[#f5f5f5] rounded-xl flex flex-col w-full lg:max-w-102.75 min-h-139.75 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-48 bg-[linear-gradient(180deg,#1B1B1B_0%,rgba(27,27,27,0)_77.63%)] rounded-xl z-0 pointer-events-none" />
-          <div className="relative z-10 p-8 flex flex-col gap-1">
-            <h3 className="font-['Inter_Tight'] font-medium text-[18px] text-white">
+        <div className="relative flex min-h-139.75 w-full flex-col overflow-hidden rounded-xl bg-[#F5F5F5] lg:max-w-102.75">
+          <div className="pointer-events-none absolute top-0 left-0 h-48 w-full rounded-xl bg-[linear-gradient(180deg,#1B1B1B_0%,rgba(27,27,27,0)_77.63%)]" />
+
+          <div className="relative z-10 flex flex-col gap-1 p-8">
+            <h3 className={`${titleClass} text-2xl leading-8`}>
               Daniel Matthew
             </h3>
-            <p className="text-[14px] text-white/60">Business Owner</p>
+
+            <p className={subtitleClass}>Business Owner</p>
           </div>
 
-          <div className="flex-1 flex items-center justify-center pb-8 relative z-10">
-            <div className="text-[#6C6C6C] opacity-40">
-              <ImagePlus size={80} strokeWidth={1.5} />
+          <div className="relative z-10 flex flex-1 items-center justify-center pb-8">
+            <div className="opacity-60">
+              <ImagePlus size={128} strokeWidth={1.8} />
             </div>
           </div>
         </div>
